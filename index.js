@@ -16,7 +16,7 @@ fetchMyIP((error, ip) => {
   console.log('It worked! \nReturned IP:', ip);
 
 
-  fetchCoordsByIP(ip, (error, lat, lon) => {
+  fetchCoordsByIP(ip, (error, coord) => {
 
 
     if (error) {
@@ -24,9 +24,9 @@ fetchMyIP((error, ip) => {
       return;
     }
 
-    console.log('Lat:', lat, 'Long:', lon);
+    console.log('Lat:', coord.lat, 'Long:', coord.long);
 
-    fetchISSFlyOverTimes(lat, lon, (error, body) => {
+    fetchISSFlyOverTimes(coord ,(error, body) => {
 
 
       if (error) {

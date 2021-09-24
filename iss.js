@@ -10,9 +10,9 @@
 
 const request = require('request');
 
-const fetchMyIP = function(callback) {
+const fetchMyIP = function (callback) {
   // use request to fetch IP address from JSON API
-  
+
   let domain = 'https://api.ipify.org?format=json';
 
   request(domain, (error, response, body) => {
@@ -34,7 +34,7 @@ const fetchMyIP = function(callback) {
 
 
 
-const fetchCoordsByIP = function(ip, callback) {
+const fetchCoordsByIP = function (ip, callback) {
   // use request to fetch IP address from JSON API
 
   let domain = `https://freegeoip.app/json/${ip}`;
@@ -52,21 +52,23 @@ const fetchCoordsByIP = function(ip, callback) {
 
     //you can fetch IP also by response.body
     //  const ip = JSON.parse(body).ip
-    const lat = JSON.parse(body).latitude;
-    const long = JSON.parse(body).longitude;
+    const coord = {
+      lat: JSON.parse(body).latitude,
+      long: JSON.parse(body).longitude
+    }
 
-    callback(null, lat, long);
+    callback(null, coord);
 
   });
 
 };
 
 
-const fetchISSFlyOverTimes = function(lat,lon, callback) {
+const fetchISSFlyOverTimes = function (coord, callback) {
   // use request to fetch IP address from JSON API
 
-  
-  let domain = `https://iss-pass.herokuapp.com/json/?lat=${lat}&lon=${lon}`;
+
+  let domain = `https://iss-pass.herokuapp.com/json/?lat=${coord.lat}&lon=${coord.long}`;
 
   request(domain, (error, response, body) => {
 
@@ -93,5 +95,5 @@ const fetchISSFlyOverTimes = function(lat,lon, callback) {
 
 
 
-module.exports = { fetchMyIP, fetchCoordsByIP ,fetchISSFlyOverTimes};
+module.exports = { fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes };
 
