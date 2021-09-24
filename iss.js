@@ -7,13 +7,13 @@
  *   - The IP address as a string (null if error). Example: "162.245.144.188"
  */
 
-let domain = 'https://api.ipify.org?format=json';
 
 const request = require('request');
 
-const fetchMyIP = function(callback) {
+const fetchMyIP = function (callback) {
   // use request to fetch IP address from JSON API
-
+  
+  let domain = 'https://api.ipify.org?format=json';
 
   request(domain, (error, response, body) => {
 
@@ -34,18 +34,21 @@ const fetchMyIP = function(callback) {
 
 
 
-const fetchCoordsByIP = function(ip, callback) {
+const fetchCoordsByIP = function (ip, callback) {
   // use request to fetch IP address from JSON API
-  
 
-  request('https://freegeoip.app/xxxjson/' + ip, (error, response, body) => {
+  let domain = `https://freegeoip.app/json/${ip}`
 
-    if (error) return callback(`\n ERROR: ${error.message}`, null);
+  request(domain, (error, response, body) => {
+
+    if (error) return callback(`\n ERROR: ${error.message}`, null, null);
 
     if (response.statusCode !== 200) {
-      callback(Error(`Status Code ${response.statusCode} when fetching IP: ${body}`), null);
-
+      const errMsg = console.log(`Status Code ${response && response.statusCode} when fetching URL: ${domain}`)
+      callback(errMsg, null, null);
+      return;
     }
+
 
     //you can fetch IP also by response.body
     //  const ip = JSON.parse(body).ip
