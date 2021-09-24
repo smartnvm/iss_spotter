@@ -26,8 +26,7 @@ const fetchMyIP = function (callback) {
 
     //you can fetch IP also by response.body
     const ip = JSON.parse(body).ip;
-    callback(null, ip); // Print the HTML for the Google homepage.
-
+    callback(null, ip); 
   });
 
 };
@@ -36,7 +35,6 @@ const fetchMyIP = function (callback) {
 
 const fetchCoordsByIP = function (ip, callback) {
   // use request to fetch IP address from JSON API
-
   let domain = `https://freegeoip.app/json/${ip}`;
 
   request(domain, (error, response, body) => {
@@ -85,8 +83,8 @@ const fetchISSFlyOverTimes = function (coord, callback) {
     //  const ip = JSON.parse(body).ip
     // const lat = JSON.parse(body).latitude;
     // const long = JSON.parse(body).longitude;
-
-    callback(null, body);
+    const passTimesArr = JSON.parse(body).response
+    callback(null, passTimesArr);
 
   });
 
@@ -95,5 +93,37 @@ const fetchISSFlyOverTimes = function (coord, callback) {
 
 
 
-module.exports = { fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes };
+const nextISSTimesForMyLocation = function (callback) {
+
+  fetchMyIP((error, ip) => {
+
+    if (error) {
+      return callback(error, null);
+    }
+
+    fetchCoordsByIP(ip, (error, coord) => {
+      if (error) {
+        return callback(error, null);
+      }
+
+
+      fetchISSFlyOverTimes(coord, (error, nextPass) => {
+
+        if (error) {
+          return callback(error, null);
+        }
+        
+         callback(null, nextPass)
+
+      })
+
+
+    });
+
+  });
+
+};
+
+
+module.exports = { fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes, nextISSTimesForMyLocation };
 
