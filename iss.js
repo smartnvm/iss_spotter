@@ -10,7 +10,7 @@
 
 const request = require('request');
 
-const fetchMyIP = function (callback) {
+const fetchMyIP = function(callback) {
   // use request to fetch IP address from JSON API
   
   let domain = 'https://api.ipify.org?format=json';
@@ -34,17 +34,17 @@ const fetchMyIP = function (callback) {
 
 
 
-const fetchCoordsByIP = function (ip, callback) {
+const fetchCoordsByIP = function(ip, callback) {
   // use request to fetch IP address from JSON API
 
-  let domain = `https://freegeoip.app/json/${ip}`
+  let domain = `https://freegeoip.app/json/${ip}`;
 
   request(domain, (error, response, body) => {
 
     if (error) return callback(`\n ERROR: ${error.message}`, null, null);
 
     if (response.statusCode !== 200) {
-      const errMsg = console.log(`Status Code ${response && response.statusCode} when fetching URL: ${domain}`)
+      const errMsg = console.log(`Status Code ${response && response.statusCode} when fetching URL: ${domain}`);
       callback(errMsg, null, null);
       return;
     }
@@ -62,6 +62,36 @@ const fetchCoordsByIP = function (ip, callback) {
 };
 
 
+const fetchISSFlyOverTimes = function(lat,lon, callback) {
+  // use request to fetch IP address from JSON API
 
-module.exports = { fetchMyIP, fetchCoordsByIP };
+  
+  let domain = `https://iss-pass.herokuapp.com/json/?lat=${lat}&lon=${lon}`;
+
+  request(domain, (error, response, body) => {
+
+    if (error) return callback(`\n ERROR: ${error.message}`, null, null);
+
+    if (response.statusCode !== 200) {
+      const errMsg = console.log(`Status Code ${response && response.statusCode} when fetching URL: ${domain}`);
+      callback(errMsg, null, null);
+      return;
+    }
+
+
+    //you can fetch IP also by response.body
+    //  const ip = JSON.parse(body).ip
+    // const lat = JSON.parse(body).latitude;
+    // const long = JSON.parse(body).longitude;
+
+    callback(null, body);
+
+  });
+
+};
+
+
+
+
+module.exports = { fetchMyIP, fetchCoordsByIP ,fetchISSFlyOverTimes};
 
