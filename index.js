@@ -25,6 +25,6 @@ fetchCoordsByIP('135.23.201.52', (error, lat, lon) => {
     return;
   }
 
-  console.log('Lat:', lat, 'Long:' , lon )
+  console.log('Lat:', lat, 'Long:' , lon);
 });
 

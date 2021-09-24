@@ -7,56 +7,56 @@
  *   - The IP address as a string (null if error). Example: "162.245.144.188"
  */
 
-let domain = 'https://api.ipify.org?format=json'
+let domain = 'https://api.ipify.org?format=json';
 
 const request = require('request');
 
-const fetchMyIP = function (callback) {
+const fetchMyIP = function(callback) {
   // use request to fetch IP address from JSON API
 
 
   request(domain, (error, response, body) => {
 
-    if (error) return callback(`\n ERROR: ${error.message}`, null)
+    if (error) return callback(`\n ERROR: ${error.message}`, null);
 
     if (response.statusCode !== 200) {
-      callback(Error(`Status Code ${response.statusCode} when fetching IP: ${body}`), null)
+      callback(Error(`Status Code ${response.statusCode} when fetching IP: ${body}`), null);
 
     }
 
     //you can fetch IP also by response.body
-    const ip = JSON.parse(body).ip
-    callback(null, ip) // Print the HTML for the Google homepage.
+    const ip = JSON.parse(body).ip;
+    callback(null, ip); // Print the HTML for the Google homepage.
 
-  })
+  });
 
-}
+};
 
 
 
-const fetchCoordsByIP = function (ip, callback) {
+const fetchCoordsByIP = function(ip, callback) {
   // use request to fetch IP address from JSON API
   
 
-  request('https://freegeoip.app/json/' + ip, (error, response, body) => {
+  request('https://freegeoip.app/xxxjson/' + ip, (error, response, body) => {
 
-    if (error) return callback(`\n ERROR: ${error.message}`, null)
+    if (error) return callback(`\n ERROR: ${error.message}`, null);
 
     if (response.statusCode !== 200) {
-      callback(Error(`Status Code ${response.statusCode} when fetching IP: ${body}`), null)
+      callback(Error(`Status Code ${response.statusCode} when fetching IP: ${body}`), null);
 
     }
 
     //you can fetch IP also by response.body
     //  const ip = JSON.parse(body).ip
-    const lat = JSON.parse(body).latitude
-    const long = JSON.parse(body).longitude
+    const lat = JSON.parse(body).latitude;
+    const long = JSON.parse(body).longitude;
 
-    callback(null, lat, long)
+    callback(null, lat, long);
 
-  })
+  });
 
-}
+};
 
 
 
